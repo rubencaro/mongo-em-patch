@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-require "./lib/mongo-em-patch"
 
 Gem::Specification.new do |s|
   s.name        = "mongo-em-patch"
