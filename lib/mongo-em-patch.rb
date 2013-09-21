@@ -10,43 +10,51 @@ class EventMachine::Synchrony::MongoTimeoutHandler
   end
 end
 
-class Mongo::Connection
-  Mutex = ::EventMachine::Synchrony::Thread::Mutex
-end
+old_verbose = $VERBOSE
+begin
+  $VERBOSE = nil
 
-class Mongo::MongoClient
-  ConditionVariable = ::EventMachine::Synchrony::Thread::ConditionVariable
-  Timeout = ::EventMachine::Synchrony::MongoTimeoutHandler
-end
+  class Mongo::Connection
+    Mutex = ::EventMachine::Synchrony::Thread::Mutex
+  end
 
-class Mongo::Pool
-  ConditionVariable = ::EventMachine::Synchrony::Thread::ConditionVariable
-  Mutex = ::EventMachine::Synchrony::Thread::Mutex
-end
+  class Mongo::MongoClient
+    ConditionVariable = ::EventMachine::Synchrony::Thread::ConditionVariable
+    Timeout = ::EventMachine::Synchrony::MongoTimeoutHandler
+  end
 
-class Mongo::Node
-  Mutex = ::EventMachine::Synchrony::Thread::Mutex
-  Timeout = ::EventMachine::Synchrony::MongoTimeoutHandler
-end
+  class Mongo::Pool
+    ConditionVariable = ::EventMachine::Synchrony::Thread::ConditionVariable
+    Mutex = ::EventMachine::Synchrony::Thread::Mutex
+  end
 
-class Mongo::TCPSocket
-  Timeout = ::EventMachine::Synchrony::MongoTimeoutHandler
-end
+  class Mongo::Node
+    Mutex = ::EventMachine::Synchrony::Thread::Mutex
+    Timeout = ::EventMachine::Synchrony::MongoTimeoutHandler
+  end
 
-class Mongo::SSLSocket
-  Timeout = ::EventMachine::Synchrony::MongoTimeoutHandler
-end
+  class Mongo::TCPSocket
+    Timeout = ::EventMachine::Synchrony::MongoTimeoutHandler
+  end
 
-class Mongo::MongoReplicaSetClient
-  Mutex = ::EventMachine::Synchrony::Thread::Mutex
-end
+  class Mongo::SSLSocket
+    Timeout = ::EventMachine::Synchrony::MongoTimeoutHandler
+  end
 
-class Mongo::MongoShardedClient
-  Mutex = ::EventMachine::Synchrony::Thread::Mutex
-end
+  class Mongo::MongoReplicaSetClient
+    Mutex = ::EventMachine::Synchrony::Thread::Mutex
+  end
 
-class Mongo::PoolManager
-  Mutex = ::EventMachine::Synchrony::Thread::Mutex
+  class Mongo::MongoShardedClient
+    Mutex = ::EventMachine::Synchrony::Thread::Mutex
+  end
+
+  class Mongo::PoolManager
+    Mutex = ::EventMachine::Synchrony::Thread::Mutex
+  end
+
+ensure
+  $VERBOSE = old_verbose
 end
 
 class Mongo::TCPSocket
